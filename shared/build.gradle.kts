@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    id("maven-publish")
 }
 
 kotlin {
@@ -11,7 +12,7 @@ kotlin {
             }
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -22,7 +23,7 @@ kotlin {
             isStatic = true
         }
     }
-
+    jvm()
     sourceSets {
         commonMain.dependencies {
             //put your multiplatform dependencies here
@@ -42,5 +43,17 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("kmplibrary") {
+            from(components["kotlin"])
+
+            groupId = "com.ankitdubey021"
+            artifactId = "pokemonkmp"
+            version = "1.0.0"
+        }
     }
 }
